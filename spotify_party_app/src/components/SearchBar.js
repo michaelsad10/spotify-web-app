@@ -58,21 +58,7 @@ class SearchBar extends Component {
             })
         })
     }
-    // 9f25ac7ba70e4a12992aeac88c355f2b
-
-    login = () => {
-        var scope = 'user-read-private user-read-email user-read-currently-playing user-read-playback-state';
-        var client_id = '9f25ac7ba70e4a12992aeac88c355f2b';
-        var response_type = 'code'; 
-        var redirect_uri = 'http://localhost:3000/';
-        // https%3A%2F%2Fexample.com%2Fcallback
-        axios.get('https://accounts.spotify.com/authorize?client_id=9f25ac7ba70e4a12992aeac88c355f2b&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F'
-        )
-        .then((response) => {
-            console.log(response); 
-        })
-    }
-
+    
     search = () => {  
         // spotifyWebApi.searchArtists(this.state.input)
         // .then((response) => {
