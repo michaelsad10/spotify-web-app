@@ -58,6 +58,13 @@ class SearchBar extends Component {
         })
     }
 
+    login = () => {
+        axios.get('https://accounts.spotify.com/authorize?client_id=9f25ac7ba70e4a12992aeac88c355f2b&response_type=code&redirect_uri=http://localhost:3000/')
+        .then((response) => {
+            console.log(response); 
+        })
+    }
+
     search = () => {  
         // spotifyWebApi.searchArtists(this.state.input)
         // .then((response) => {
@@ -75,10 +82,12 @@ class SearchBar extends Component {
         //     console.log(this.state.artists); 
         // })
         axios.get('https://api.spotify.com/v1/search?q=name:SteadyMobbin&type=track')
-        .then(res => {
-            this.setState({songs = music});
-        })
-    }
+        .then((res) => { 
+            this.setState({artists: res})
+            console.log(this.state.artists);
+         })
+        }
+
 
     handleSearch = (search) => {
         console.log(search.target.value); 
@@ -114,7 +123,7 @@ class SearchBar extends Component {
             {/* <Button onClick={this.getNowPlaying} variant="primary"> Check Now! </Button>
             <h1> {this.state.nowPlaying.name } </h1> 
             <img src={this.state.nowPlaying.image}/> */}
-            <button onClick={this.search}> search </button>
+            <button onClick={this.login}> search </button>
                 </div> 
             
         );
