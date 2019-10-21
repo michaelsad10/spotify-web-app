@@ -20,50 +20,41 @@ class App extends Component {
     super(props);
     // const params = this.getHashParams();
     this.state = {
-      name: "michael",
-      selected: 'Options',
-      // loggedIn: params.access_token ? true : false,
-      nowPlaying: {
-        name: 'Not Checked',
-        image: '',
-      },
-      input: '',
-      artists: '',
-      songs: '',
-      params: '', 
+      access_token: '',
+      token_type: '', 
+      expires_in: '', 
     };
     this.getHashParams = this.getHashParams.bind(this); 
+    this.search = this.search.bind(this); 
   }
   
   componentDidMount() {
     this.setState({params: this.getHashParams()})
-    console.log("hello");
   }
 
   search() {
-    let p = this.getHashParams(); 
     let config = {
       headers: {
-        'Authorization': 'Bearer ' + p.access_token
+        'Authorization': '' + this.state.token_type + " " + this.state.access_token
       },
     }
-    axios.get("https://api.spotify.com/v1/search?q=roadhouse%20blues&type=track", config)
+    axios.get("https://api.spotify.com/v1/search?q=NO%20BYSTANDERS&type=track", config)
     .then((response) => {
       console.log(response); 
     })
   }
-   getHashParams = () => {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1); 
-    while (e = r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    console.log(hashParams); 
-    return hashParams;
+
+  getHashParams() {
+    var url = window.location.hash;  // Gets URI after # 
+    var urlSplit = url.split("&");  // Splits the URI 
+    var access_token = urlSplit[0].substring(urlSplit[0].indexOf("=")+1,urlSplit[0].length);  // Gets Access Token 
+    var token_type = urlSplit[1].substring(urlSplit[1].indexOf("=")+1, urlSplit[1].length);
+    var expires_in = urlSplit[2].substring(urlSplit[2].indexOf("=")+1, urlSplit[2].length);      
+    this.setState({access_token: access_token,
+      token_type: token_type,
+      expires_in: expires_in
+    });
   }
-
-
 
   render() {
     return (
