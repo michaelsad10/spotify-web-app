@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'; 
+import SearchBar from './components/SearchBar'; 
 
 const spotifyWebApi = new Spotify();
 
@@ -14,6 +15,8 @@ const scopes = [
   "user-read-currently-playing",
   "user-read-playback-state",
 ];
+// https://accounts.spotify.com/en/authorize?client_id=4fa655f5a2e04f5baaa9f13b6283bddf&redirect_uri=http:%2F%2Flocalhost:3000&scope=user-read-currently-playing%20user-read-playback-state&response_type=token&show_dialog=true
+const login = authEndpoint + "client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=" + scopes[0]+"%20"+scopes[1]+"&response_type=token&show_dialog=true";
 // Get the hash of the url
 class App extends Component {
   constructor(props) {
@@ -23,13 +26,28 @@ class App extends Component {
       access_token: '',
       token_type: '', 
       expires_in: '', 
+      loggedIn: false,
+      songs: '', 
+      input: '', 
     };
     this.getHashParams = this.getHashParams.bind(this); 
-    this.search = this.search.bind(this); 
+    this.search = this.search.bind(this);
+    this.songCallBack = this.songCallBack.bind(this); 
   }
   
   componentDidMount() {
-    this.setState({params: this.getHashParams()})
+    if(window.location.hash !== '') {
+      this.setState({params: this.getHashParams()})
+    }
+  } 
+
+  songCallBack(songs) { 
+    this.setState({songs: songs})
+  }
+
+  handleSearch = (search) => {
+    console.log(search.target.value); 
+    this.setState({input: search.target.value})
   }
 
   search() {
@@ -39,8 +57,11 @@ class App extends Component {
       },
     }
     axios.get("https://api.spotify.com/v1/search?q=NO%20BYSTANDERS&type=track", config)
-    .then((response) => {
-      console.log(response); 
+    .then((response) => { 
+      this.setState({song: response})
+      if(this.state.song != null) {
+        this.state.songName = (this.state.song.data.tracks.items[0].name);
+      }     
     })
   }
 
@@ -56,19 +77,18 @@ class App extends Component {
     });
   }
 
+
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <a
-            className="btn btn--loginApp-link"
-            href={`${authEndpoint}client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
-          >
-            Login to Spotify
-        </a>
-        <button onClick={this.search}> Hello </button>
+        <button> 
+          <a href={login}> Login to Spotify  </a>
+        </button>
+      <SearchBar parentCallBack = {this.songCallBack}> </SearchBar>
         </header>
+        <p> {this.state.songs}</p>
       </div>
     );
   }

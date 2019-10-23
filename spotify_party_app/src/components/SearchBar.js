@@ -14,32 +14,16 @@ class SearchBar extends Component {
 
     constructor(props) {
         super(props); 
-        const params = this.getHashParams(); 
         this.state = {
-            name: "michael",
-            selected: 'Options', 
-            loggedIn: params.access_token ? true : false, 
-            nowPlaying: {
-                name: 'Not Checked',
-                image: '', 
-            },
             input: '', 
             artists: '', 
             songs: '', 
+            loggedIn: false, 
+            search: '',
         };
-        if (params.access_token) {
-            spotifyWebApi.setAccessToken(params.access_token); 
-        }
+    
+        this.sendSongs = this.sendSongs.bind(this); 
     }
-    getHashParams() {
-        var hashParams = {};
-        var e, r = /([^&;=]+)=?([^&;]*)/g,
-            q = window.location.hash.substring(1);
-        while ( e = r.exec(q)) {
-           hashParams[e[1]] = decodeURIComponent(e[2]);
-        }
-        return hashParams;
-      }
 
     handleSelect = (evt) => {
         this.setState({
@@ -47,60 +31,37 @@ class SearchBar extends Component {
         });
     }
 
-    getNowPlaying = () => {
-        spotifyWebApi.getMyCurrentPlaybackState()
-        .then((response) => {
-            this.setState({
-                nowPlaying: {
-                    name: response.item.name, 
-                    image: response.item.album.images[0].url
-                }
-            })
-        })
-    }
-    
-    search = () => {  
-        // spotifyWebApi.searchArtists(this.state.input)
-        // .then((response) => {
-        //     this.setState({
-        //         artists: response
-        //     })
-        //     console.log(this.state.artists); 
-        // })
-
-        // spotifyWebApi.searchTracks(this.state.input)
-        // .then((response) => {
-        //     this.setState({
-        //         artists: response
-        //     })
-        //     console.log(this.state.artists); 
-        // })
-        axios.get('https://api.spotify.com/v1/search?q=name:SteadyMobbin&type=track')
-        .then((res) => { 
-            this.setState({artists: res})
-            console.log(this.state.artists);
-         })
-        }
-
-
     handleSearch = (search) => {
         console.log(search.target.value); 
         this.setState({input: search.target.value})
     }
 
+    sendSongs() { // Need to call this after someone searches a song 
+        this.props.parentCallback("hello");
+        // this.props.parentCallback(this.state.songs);
+    }
+    search() {
+        let config = {
+          headers: {
+            'Authorization': '' + this.state.token_type + " " + this.state.access_token
+          },
+        }
+        axios.get("https://api.spotify.com/v1/search?q=NO%20BYSTANDERS&type=track", config)
+        .then((response) => { 
+          if(response != null) {
+            this.setState({songs: response})
+          }     
+        })
+      }
 
-    
+
 
     
 
     render() {
         return (
             <div> 
-                <a href="http://localhost:8888/">
-                <button>  Login with Spotify </button> 
-                </a>
                 <Form>
-                {/* <input type="string" onChange={this.handleSearch} value={this.state.search}/> */}
                 <FormControl onChange={this.handleSearch} value={this.state.search} type="text" placeholder="Search" className="mr-sm-2"/>
                 {/* <Dropdown onSelect={this.handleSelect}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -112,13 +73,9 @@ class SearchBar extends Component {
                         <Dropdown.Item eventKey="Playlist"> Playlist </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown> */}
-            </Form>
-            {/* <Button onClick={this.search(this.state.selected)} variant="primary"> Search </Button> */}
-            {/* <Button onClick={this.getNowPlaying} variant="primary"> Check Now! </Button>
-            <h1> {this.state.nowPlaying.name } </h1> 
-            <img src={this.state.nowPlaying.image}/> */}
-            <button onClick={this.login}> search </button>
-                </div> 
+                </Form>
+                <Button onClick={this.sendSongs} > Search </Button>
+            </div> 
             
         );
     }
