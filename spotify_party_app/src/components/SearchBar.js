@@ -1,59 +1,72 @@
 import React, { Component } from 'react'; 
-import { Input } from '@chakra-ui/core'; 
 import FormControl from 'react-bootstrap/FormControl'; 
 import Form from 'react-bootstrap/Form'; 
-import Dropdown from 'react-bootstrap/Dropdown'; 
 import Button  from 'react-bootstrap/Button'; 
-import Spotify from 'spotify-web-api-js'; 
 import axios from 'axios';
 
 
-const spotifyWebApi = new Spotify(); 
 
 class SearchBar extends Component {
 
     constructor(props) {
         super(props); 
         this.state = {
-            input: '', 
-            artists: '', 
             songs: '', 
             loggedIn: false, 
             search: '',
+            listOfSongs: [], 
+            listOfArtists: [], 
+            information: '', 
         };
-    
         this.sendSongs = this.sendSongs.bind(this); 
-    }
-
-    handleSelect = (evt) => {
-        this.setState({
-            selected: evt
-        });
+        this.search = this.search.bind(this); 
+        this.getInformation = this.getInformation.bind(this); 
     }
 
     handleSearch = (search) => {
-        console.log(search.target.value); 
-        this.setState({input: search.target.value})
+        this.setState({search: search.target.value})
     }
 
-    sendSongs() { // Need to call this after someone searches a song 
-        this.props.parentCallback("hello");
-        // this.props.parentCallback(this.state.songs);
+    sendSongs() {  
+        // console.log(this.props); 
+        this.props.parentCallBack(this.state.listOfSongs); 
     }
+
     search() {
+        console.log(this.props); 
         let config = {
           headers: {
-            'Authorization': '' + this.state.token_type + " " + this.state.access_token
+            'Authorization': '' + this.props.token_type + " " + this.props.access_token
           },
         }
-        axios.get("https://api.spotify.com/v1/search?q=NO%20BYSTANDERS&type=track", config)
+        var encode = encodeURI(this.state.search); 
+        axios.get("https://api.spotify.com/v1/search?q=" + encode + "&type=track", config)
         .then((response) => { 
           if(response != null) {
-            this.setState({songs: response})
+            console.log(response); 
+            this.setState({information: response.data.tracks.items})
+            this.getInformation(); 
+            this.sendSongs(); 
           }     
         })
       }
 
+    
+    getInformation() {
+        for(var x=0; x<this.state.information.length; x++) {
+            console.log(this.state.information[x].name); 
+            this.setState({listOfSongs : this.state.information[x].name})
+        }
+    }
+    // createListOfSongs(songs) {
+    //     for(var x=0; x<songs.length; x++) {
+    //         this.setState(this.state.listOfSongs.push(songs[x]))
+    //     }
+    // }
+
+// information = response.data.tracks.items is an array of all the artists 
+// songs = information[x].name 
+// artist = information.artists[0].name 
 
 
     
@@ -62,19 +75,9 @@ class SearchBar extends Component {
         return (
             <div> 
                 <Form>
-                <FormControl onChange={this.handleSearch} value={this.state.search} type="text" placeholder="Search" className="mr-sm-2"/>
-                {/* <Dropdown onSelect={this.handleSelect}>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        {this.state.selected}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item eventKey="Artist"> Artist </Dropdown.Item>
-                        <Dropdown.Item eventKey="Song"> Song </Dropdown.Item>
-                        <Dropdown.Item eventKey="Playlist"> Playlist </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown> */}
+                <FormControl onChange={this.handleSearch} type="text" placeholder="Search" className="mr-sm-2"/>
                 </Form>
-                <Button onClick={this.sendSongs} > Search </Button>
+                <Button onClick={this.search} > Search </Button>
             </div> 
             
         );

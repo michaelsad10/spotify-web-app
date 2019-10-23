@@ -32,7 +32,7 @@ class App extends Component {
     };
     this.getHashParams = this.getHashParams.bind(this); 
     this.search = this.search.bind(this);
-    this.songCallBack = this.songCallBack.bind(this); 
+    // this.songCallBack = this.songCallBack.bind(this); 
   }
   
   componentDidMount() {
@@ -41,14 +41,10 @@ class App extends Component {
     }
   } 
 
-  songCallBack(songs) { 
-    this.setState({songs: songs})
-  }
-
-  handleSearch = (search) => {
-    console.log(search.target.value); 
-    this.setState({input: search.target.value})
-  }
+  // handleSearch = (search) => {
+  //   console.log(search.target.value); 
+  //   this.setState({input: search.target.value})
+  // }
 
   search() {
     let config = {
@@ -77,7 +73,10 @@ class App extends Component {
     });
   }
 
-
+  songCallBack = (songs) => {
+    console.log(songs); 
+    this.setState({songs:songs})
+  }
 
   render() {
     return (
@@ -86,9 +85,9 @@ class App extends Component {
         <button> 
           <a href={login}> Login to Spotify  </a>
         </button>
-      <SearchBar parentCallBack = {this.songCallBack}> </SearchBar>
-        </header>
         <p> {this.state.songs}</p>
+      <SearchBar parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>
+        </header>
       </div>
     );
   }
