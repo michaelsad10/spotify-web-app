@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Spotify from 'spotify-web-api-js';
 import axios from 'axios'; 
 import SearchBar from './components/SearchBar'; 
+import SongBox from './components/SongBox'; 
 
-const spotifyWebApi = new Spotify();
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize?';
 // Replace with your app's client ID, redirect URI and desired scopes
@@ -28,6 +26,7 @@ class App extends Component {
       expires_in: '', 
       loggedIn: false,
       songs: '', 
+      artists: '', 
       input: '', 
     };
     this.getHashParams = this.getHashParams.bind(this); 
@@ -40,11 +39,6 @@ class App extends Component {
       this.setState({params: this.getHashParams()})
     }
   } 
-
-  // handleSearch = (search) => {
-  //   console.log(search.target.value); 
-  //   this.setState({input: search.target.value})
-  // }
 
   search() {
     let config = {
@@ -73,9 +67,11 @@ class App extends Component {
     });
   }
 
-  songCallBack = (songs) => {
+  songCallBack = (songs, artists) => {
     console.log(songs); 
+    console.log(artists); 
     this.setState({songs:songs})
+    this.setState({artists:artists})
   }
 
   render() {
@@ -85,8 +81,8 @@ class App extends Component {
         <button> 
           <a href={login}> Login to Spotify  </a>
         </button>
-        <p> {this.state.songs}</p>
       <SearchBar parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>
+      <SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox>
         </header>
       </div>
     );

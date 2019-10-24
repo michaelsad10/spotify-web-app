@@ -5,7 +5,6 @@ import Button  from 'react-bootstrap/Button';
 import axios from 'axios';
 
 
-
 class SearchBar extends Component {
 
     constructor(props) {
@@ -14,7 +13,7 @@ class SearchBar extends Component {
             songs: '', 
             loggedIn: false, 
             search: '',
-            listOfSongs: [], 
+            listOfSongs: '', 
             listOfArtists: [], 
             information: '', 
         };
@@ -27,13 +26,11 @@ class SearchBar extends Component {
         this.setState({search: search.target.value})
     }
 
-    sendSongs() {  
-        // console.log(this.props); 
-        this.props.parentCallBack(this.state.listOfSongs); 
+    sendSongs() {   
+        this.props.parentCallBack(this.state.listOfSongs, this.state.listOfArtists); 
     }
 
     search() {
-        console.log(this.props); 
         let config = {
           headers: {
             'Authorization': '' + this.props.token_type + " " + this.props.access_token
@@ -53,16 +50,15 @@ class SearchBar extends Component {
 
     
     getInformation() {
+        var songArr = []; 
+        var artistArr = []; 
         for(var x=0; x<this.state.information.length; x++) {
-            console.log(this.state.information[x].name); 
-            this.setState({listOfSongs : this.state.information[x].name})
+            songArr.push(this.state.information[x].name);  
+            artistArr.push(this.state.information[x].artists[0].name)
+            this.setState({listOfSongs : songArr})
+            this.setState({listOfArtists: artistArr})
         }
     }
-    // createListOfSongs(songs) {
-    //     for(var x=0; x<songs.length; x++) {
-    //         this.setState(this.state.listOfSongs.push(songs[x]))
-    //     }
-    // }
 
 // information = response.data.tracks.items is an array of all the artists 
 // songs = information[x].name 
