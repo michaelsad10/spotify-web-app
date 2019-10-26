@@ -5,21 +5,17 @@ import SearchBar from './components/SearchBar';
 import SongBox from './components/SongBox'; 
 
 
-export const authEndpoint = 'https://accounts.spotify.com/authorize?';
-// Replace with your app's client ID, redirect URI and desired scopes
+const authEndpoint = 'https://accounts.spotify.com/authorize?';
 const clientId = "4fa655f5a2e04f5baaa9f13b6283bddf";
 const redirectUri = "http://localhost:3000";
 const scopes = [
   "user-read-currently-playing",
   "user-read-playback-state",
 ];
-// https://accounts.spotify.com/en/authorize?client_id=4fa655f5a2e04f5baaa9f13b6283bddf&redirect_uri=http:%2F%2Flocalhost:3000&scope=user-read-currently-playing%20user-read-playback-state&response_type=token&show_dialog=true
 const login = authEndpoint + "client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=" + scopes[0]+"%20"+scopes[1]+"&response_type=token&show_dialog=true";
-// Get the hash of the url
 class App extends Component {
   constructor(props) {
     super(props);
-    // const params = this.getHashParams();
     this.state = {
       access_token: '',
       token_type: '', 
@@ -29,14 +25,16 @@ class App extends Component {
       artists: '', 
       input: '', 
     };
+    if(this.state.access_token != '') {
+      this.state.loggedIn = true; 
+    }
     this.getHashParams = this.getHashParams.bind(this); 
     this.search = this.search.bind(this);
-    // this.songCallBack = this.songCallBack.bind(this); 
   }
   
   componentDidMount() {
     if(window.location.hash !== '') {
-      this.setState({params: this.getHashParams()})
+      this.setState({params: this.getHashParams()}) // This gets the URI 
     }
   } 
 
@@ -68,11 +66,11 @@ class App extends Component {
   }
 
   songCallBack = (songs, artists) => {
-    console.log(songs); 
-    console.log(artists); 
     this.setState({songs:songs})
     this.setState({artists:artists})
   }
+
+  // Need to check if the person is actually logged in 
 
   render() {
     return (
@@ -81,7 +79,7 @@ class App extends Component {
         <button> 
           <a href={login}> Login to Spotify  </a>
         </button>
-      <SearchBar parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>
+      <SearchBar loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>
       <SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox>
         </header>
       </div>

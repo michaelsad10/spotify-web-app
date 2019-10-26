@@ -26,7 +26,7 @@ class SongBox extends Component {
         </Card>
       );
     }
-
+    
     return (
       <Accordion defaultActiveKey="0">
           {songBoxes}
