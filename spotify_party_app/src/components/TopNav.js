@@ -11,8 +11,10 @@ const scopes = [
     "user-read-playback-state",
     "playlist-modify-public",
     "playlist-modify-private",
+    "playlist-read-collaborative",
+    "playlist-read-private",
 ];
-const login = authEndpoint + "client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=" + scopes[0] + "%20" + scopes[1] + "%20" + scopes[2] + "%20" + scopes[3] + "&response_type=token&show_dialog=true";
+const login = authEndpoint + "client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=" + scopes[0] + "%20" + scopes[1] + "%20" + scopes[2] + "%20" + scopes[3] + "%20" + scopes[4] + "%20" + scopes[5] + "&response_type=token&show_dialog=true";
 
 class TopNav extends Component {
     constructor(props) {

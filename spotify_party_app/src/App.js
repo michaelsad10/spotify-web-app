@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
 import SearchBar from './components/SearchBar';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Row from '.'
 import SongBox from './components/SongBox';
 import PlaylistsBox from './components/PlaylistsBox';
 import TopNav from './components/TopNav';
@@ -83,11 +87,8 @@ class App extends Component {
       <div>
         <TopNav userName={this.state.userName} loggedIn={this.state.loggedIn}></TopNav>
         {this.state.access_token && (<UserId sendId = {this.getUserId} access_token = {this.state.access_token} token_type = {this.state.token_type}> </UserId>)}
+        {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)}
         {this.state.user_id && this.state.access_token && <UserPlaylists access_token = {this.state.access_token} token_type = {this.state.token_type} user_id = {this.state.user_id}> </UserPlaylists> }
-        {/* <p>{this.state.access_token}</p> */}
-        {/* <p> {this.state.playlist_href} </p>
-        <p> {this.state.user_id} </p>  */}
-        {/* {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} */}
         {/* <SearchBar loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar> */}
         {/* <SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox> */}
         {/* <PlaylistDisplay  access_token = {this.state.access_token} token_type = {this.state.token_type} playlist_id = {this.state.playlist_id}> </PlaylistDisplay> */}

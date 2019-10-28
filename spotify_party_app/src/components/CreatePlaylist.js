@@ -47,16 +47,6 @@ class CreatePlaylist extends Component {
         }
         axios.get("https://api.spotify.com/v1/me", config)
             .then(response => this.setState({ data: response.data }, console.log(response.data)))
-
-        // axios.get("https://api.spotify.com/v1/me", config)
-        //     .then((response) => {
-        //         if (response != null) {
-        //             this.setState({user_id : response.data.id,
-        //                 access_token: this.props.access_token, 
-        //                 token_type: this.props.token_type,
-        //             }) 
-        //         }
-        //     })
     }
 
     getPlaylistId() {
@@ -64,16 +54,13 @@ class CreatePlaylist extends Component {
             headers: {
                 'Authorization': '' + this.state.token_type + " " + this.state.access_token
             },
-        }
-        console.log(this.state.token_type); 
-        console.log(this.state.access_token); 
+        } 
         axios.post(`https://api.spotify.com/v1/users/${this.state.data.id}/playlists`, {
             name: this.state.playlist_name,
             public: false,
             collaborative: true,
         }, config)
         .then(response => this.setState({playlist_data: response.data}, this.sendPlaylistId(this.state.data.id, response.data.href, response.data.id)))
-        // this.sendPlaylistId(this.state.data.id, this.state.playlist_data.href, this.state.playlist_data.id)
     }
 
     render() {
