@@ -70,10 +70,11 @@ class SearchBar extends Component {
     render() {
         return (
             <div> 
-                <Form>
+                <Form inline>
                 <FormControl onChange={this.handleSearch} type="text" placeholder="Search" className="mr-sm-2"/>
-                </Form>
                 <Button onClick={this.search} > Search </Button>
+                </Form>
+                
             </div> 
             
         );
