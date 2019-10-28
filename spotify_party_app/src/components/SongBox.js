@@ -12,7 +12,7 @@ class SongBox extends Component {
   render() {
     let songBoxes = [];
 
-    for (var x = 0; x < this.props.songs.length; x++) {
+    for (var x=0; x < this.props.songs.length; x++) {
       songBoxes.push(
         <Card>
           <Card.Header>
