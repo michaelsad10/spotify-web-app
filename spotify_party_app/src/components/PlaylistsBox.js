@@ -26,7 +26,7 @@ class PlaylistsBox extends Component {
                     playlistsList[playlists_href[x].name] = playlists_href[x].tracks.href;
                 }
                 this.setState({playlists: playlistsList});
-                console.log(this.state.playlists); 
+                // console.log(this.state.playlists); 
               }     
             })
     }

@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 const authEndpoint = 'https://accounts.spotify.com/authorize?';
 const clientId = "4fa655f5a2e04f5baaa9f13b6283bddf";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "https://salty-ravine-93902.herokuapp.com";
+// const redirectUri = "http://localhost:3000";
 const scopes = [
     "user-read-currently-playing",
     "user-read-playback-state",

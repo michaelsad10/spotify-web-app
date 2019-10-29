@@ -11,7 +11,9 @@ import CreatePlaylist from './components/CreatePlaylist';
 import PlaylistDisplay from './components/PlaylistDisplay'
 import UserPlaylists from './components/UserPlaylists';
 import UserId from './components/UserId';
+import NowPlaying from './components/NowPlaying';
 import axios from 'axios';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
@@ -83,20 +85,24 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="background">
         <TopNav userName={this.state.userName} loggedIn={this.state.loggedIn}></TopNav>
         <Container>
+          {/* <Row>
+            {this.state.token_type && (<NowPlaying token_type={this.state.token_type} access_token={this.state.access_token} ></NowPlaying>)}
+          </Row> */}
           <Row>
             <Col md={6}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
-            <Col md={6}> <SearchBar loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar> </Col>
+            <Col md={6}> {this.state.token_type && (<SearchBar loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
           </Row>
           <Row>
             <Col md={6}> {this.state.user_id && this.state.access_token && <UserPlaylists access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
-            <Col md={6}> <SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox> </Col> 
+            <Col md={6}> {this.state.token_type && (<SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox>)} </Col> 
           </Row>
+          {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
         </Container>
 
-        {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
+    
         {/* {this.state.playlist_id && (<PlaylistDisplay  access_token = {this.state.access_token} token_type = {this.state.token_type} playlist_id = {this.state.playlist_id}> </PlaylistDisplay>)} */}
         {/* <PlaylistsBox  loggedIn = {this.state.loggedIn} access_token = {this.state.access_token} token_type = {this.state.token_type}> </PlaylistsBox> */}
       </div>

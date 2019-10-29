@@ -19,7 +19,7 @@ class PlaylistDisplay extends Component {
             }
         }
         axios.get(`https://api.spotify.com/v1/playlists/${this.props.playlist_id}`, config)
-        .then(response => this.setState({data: response.data}, console.log(response.data)))
+        .then(response => this.setState({data: response.data}))
     }
 
     render() {

@@ -3,6 +3,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import './CreatePlaylist.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -36,9 +37,9 @@ class CreatePlaylist extends Component {
     }
 
     sendPlaylistId(id, href, playlist_id) {
-        console.log(id);
-        console.log(href);
-        console.log(playlist_id);
+        // console.log(id);
+        // console.log(href);
+        // console.log(playlist_id);
         this.props.sendPlaylistId(id, href, playlist_id);
     }
 
@@ -49,7 +50,8 @@ class CreatePlaylist extends Component {
             },
         }
         axios.get("https://api.spotify.com/v1/me", config)
-            .then(response => this.setState({ data: response.data }, console.log(response.data)))
+            .then(response => this.setState({ data: response.data }, ))
+            // console.log(response.data)
     }
 
     getPlaylistId() {
