@@ -14,7 +14,6 @@ class NowPlaying extends Component {
     // componentDidMount() {
     // }
     getNowPlaying() {
-        console.log("hell0");
         let config = {
             headers: {
                 'Authorization': '' + this.props.token_type + " " + this.props.access_token
@@ -23,9 +22,7 @@ class NowPlaying extends Component {
         axios.get("https://api.spotify.com/v1/me/player/currently-playing", config)
         .then(response => this.setState({song: response.data.item.name,
             album : response.data.item.album.images[0].url, 
-        }, console.log(response.data.item.album.images[0].url)))
-        console.log("hello");
-        // .then(response => this.setState({nowPlaying : response}), console.log(response))
+        }))
     }
     render()
         {

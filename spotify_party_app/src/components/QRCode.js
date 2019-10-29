@@ -22,7 +22,6 @@ class QRCode extends Component {
         axios.get(`https://api.qrserver.com/v1/create-qr-code/?data=${this.props.url}&size=100x100`)
         .then(response => {
             if(response != null) {
-                // console.log(response); 
                 this.setState({qr : response.config.url})
             }
         })

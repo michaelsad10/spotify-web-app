@@ -37,7 +37,6 @@ class SearchBar extends Component {
         axios.get("https://api.spotify.com/v1/search?q=" + encode + "&type=track", config)
         .then((response) => { 
           if(response != null) {
-            // console.log(response); 
             for(var x=0; x<response.data.tracks.items.length; x++) {
                 songs.push(response.data.tracks.items[x].name);
                 artists.push(response.data.tracks.items[x].artists[0].name);

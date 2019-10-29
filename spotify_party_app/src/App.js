@@ -4,15 +4,11 @@ import SearchBar from './components/SearchBar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import SongBox from './components/SongBox';
-import PlaylistsBox from './components/PlaylistsBox';
 import TopNav from './components/TopNav';
 import CreatePlaylist from './components/CreatePlaylist';
-import PlaylistDisplay from './components/PlaylistDisplay'
 import UserPlaylists from './components/UserPlaylists';
 import UserId from './components/UserId';
 import NowPlaying from './components/NowPlaying';
-import axios from 'axios';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -83,7 +79,6 @@ class App extends Component {
   }
 
   getAllPlaylistId(playlists, playlists_name) {
-    console.log(playlists_name); 
     this.setState({allPlaylistIds : playlists,
       playlists_name : playlists_name
     })
@@ -106,14 +101,9 @@ class App extends Component {
           </Row>
           <Row>
             <Col md={6}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
-            {/* <Col md={6}> {this.state.token_type && this.state.allPlaylistIds && (<SongBox playlist_id = {this.state.allPlaylistIds} songs = {this.state.songs} artists = {this.state.artists}> </SongBox>)} </Col>  */}
           </Row>
           {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
         </Container>
-
-    
-        {/* {this.state.playlist_id && (<PlaylistDisplay  access_token = {this.state.access_token} token_type = {this.state.token_type} playlist_id = {this.state.playlist_id}> </PlaylistDisplay>)} */}
-        {/* <PlaylistsBox  loggedIn = {this.state.loggedIn} access_token = {this.state.access_token} token_type = {this.state.token_type}> </PlaylistsBox> */}
       </div>
     );
   }

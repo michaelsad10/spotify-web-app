@@ -37,7 +37,6 @@ class UserPlaylist extends Component {
         axios.get(`https://api.spotify.com/v1/users/${this.props.user_id}/playlists`, config)
             .then((response => {
                 if (response != null) {
-                    console.log(response);
                     this.setState({ data: response.data })
                     for (var x = 0; x < response.data.items.length; x++) {
                         playlists.push(response.data.items[x].id);
@@ -49,7 +48,6 @@ class UserPlaylist extends Component {
                         data: response.data
                     });
                 }
-                // console.log(this.state.playlists);
                 this.sendPlaylistId(); 
             }))
     }

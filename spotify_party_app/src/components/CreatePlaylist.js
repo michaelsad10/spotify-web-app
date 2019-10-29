@@ -37,9 +37,6 @@ class CreatePlaylist extends Component {
     }
 
     sendPlaylistId(id, href, playlist_id) {
-        // console.log(id);
-        // console.log(href);
-        // console.log(playlist_id);
         this.props.sendPlaylistId(id, href, playlist_id);
     }
 
@@ -51,7 +48,6 @@ class CreatePlaylist extends Component {
         }
         axios.get("https://api.spotify.com/v1/me", config)
             .then(response => this.setState({ data: response.data }, ))
-            // console.log(response.data)
     }
 
     getPlaylistId() {
