@@ -5,21 +5,24 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import QRCode from './QRCode';
-import Tracks from './Tracks'; 
+import Tracks from './Tracks';
 
 class UserPlaylist extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: '',
-            qr: '',
             playlists: [],
-            tracks_href: [],
-            tracks: [],
-            songs: [],
+            playlists_name: [], 
         }
         this.getPlaylists = this.getPlaylists.bind(this);
+        this.sendPlaylistId = this.sendPlaylistId.bind(this);
     }
+
+    sendPlaylistId() {
+        this.props.sendPlaylistId(this.state.playlists, this.state.playlists_name)
+    }
+
     componentDidMount() {
         this.getPlaylists();
     }
@@ -29,12 +32,30 @@ class UserPlaylist extends Component {
                 'Authorization': '' + this.props.token_type + " " + this.props.access_token
             }
         }
+        var playlists = [];
+        var playlists_name = []; 
         axios.get(`https://api.spotify.com/v1/users/${this.props.user_id}/playlists`, config)
-            .then(response => this.setState({ data: response.data }))
+            .then((response => {
+                if (response != null) {
+                    console.log(response);
+                    this.setState({ data: response.data })
+                    for (var x = 0; x < response.data.items.length; x++) {
+                        playlists.push(response.data.items[x].id);
+                        playlists_name.push(response.data.items[x].name); 
+                    }
+                    this.setState({
+                        playlists_name: playlists_name, 
+                        playlists: playlists,
+                        data: response.data
+                    });
+                }
+                // console.log(this.state.playlists);
+                this.sendPlaylistId(); 
+            }))
     }
-    
+
     render() {
-        if (this.state.data != '') {
+        if (this.state.data != '' && this.state.playlists != '') {
             var playlists = [];
             for (var x = 0; x < this.state.data.items.length; x++) {
                 playlists.push(
@@ -46,10 +67,8 @@ class UserPlaylist extends Component {
                         </Card.Header>
                         <Accordion.Collapse eventKey={x}>
                             <Card.Body>
-                                <Tracks tracks = {this.state.data.items[x].tracks.href} access_token = {this.props.access_token} token_type = {this.props.token_type}> </Tracks>
-                                {/* {song_artist} */}
-                                <QRCode url = {this.state.data.items[x].external_urls.spotify}> </QRCode>
-                                {/* <Image src={qrUrl} rounded /> */}
+                                <Tracks tracks={this.state.data.items[x].tracks.href} access_token={this.props.access_token} token_type={this.props.token_type}> </Tracks>
+                                <QRCode url={this.state.data.items[x].external_urls.spotify}> </QRCode>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>

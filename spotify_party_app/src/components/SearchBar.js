@@ -37,7 +37,7 @@ class SearchBar extends Component {
         axios.get("https://api.spotify.com/v1/search?q=" + encode + "&type=track", config)
         .then((response) => { 
           if(response != null) {
-            console.log(response); 
+            // console.log(response); 
             for(var x=0; x<response.data.tracks.items.length; x++) {
                 songs.push(response.data.tracks.items[x].name);
                 artists.push(response.data.tracks.items[x].artists[0].name);
@@ -66,7 +66,7 @@ class SearchBar extends Component {
                 <FormControl onChange={this.handleSearch} type="text" placeholder="Search" className="mr-sm-2"/>
                 {this.props.access_token && (<Button onClick={this.search} > Search </Button>)}
                 </Form>
-                {this.state.songs && (<SongList  artists = {this.state.artists} song_uri = {this.state.song_uri} album_covers = {this.state.album_covers} songs = {this.state.songs} token_type = {this.props.token_type} access_token = {this.props.access_token}> </SongList>)}
+                {this.state.songs && (<SongList playlists_name = {this.props.playlists_name} playlists_id = {this.props.playlists_id}  artists = {this.state.artists} song_uri = {this.state.song_uri} album_covers = {this.state.album_covers} songs = {this.state.songs} token_type = {this.props.token_type} access_token = {this.props.access_token}> </SongList>)}
             </div> 
             
         );

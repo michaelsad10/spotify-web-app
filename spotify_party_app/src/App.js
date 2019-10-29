@@ -32,11 +32,14 @@ class App extends Component {
       playlist_id: '',
       user_id: '',
       playlist_href: '',
+      allPlaylistIds: [], 
+      playlists_name: [], 
     };
     this.getSpotify = this.getSpotify.bind(this);
     this.getHashParams = this.getHashParams.bind(this);
     this.getPlayListId = this.getPlayListId.bind(this);
     this.getUserId = this.getUserId.bind(this);
+    this.getAllPlaylistId = this.getAllPlaylistId.bind(this); 
   }
 
 
@@ -79,6 +82,12 @@ class App extends Component {
     this.setState({ playlist_id: playlist_id })
   }
 
+  getAllPlaylistId(playlists, playlists_name) {
+    console.log(playlists_name); 
+    this.setState({allPlaylistIds : playlists,
+      playlists_name : playlists_name
+    })
+  }
   getUserId(id) {
     this.setState({ user_id: id });
   }
@@ -93,11 +102,11 @@ class App extends Component {
           </Row> */}
           <Row>
             <Col md={6}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
-            <Col md={6}> {this.state.token_type && (<SearchBar loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
+            <Col md={6}> {this.state.token_type && this.state.allPlaylistIds && (<SearchBar  playlists_name = {this.state.playlists_name} playlists_id = {this.state.allPlaylistIds} loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
           </Row>
           <Row>
-            <Col md={6}> {this.state.user_id && this.state.access_token && <UserPlaylists access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
-            <Col md={6}> {this.state.token_type && (<SongBox songs = {this.state.songs} artists = {this.state.artists}> </SongBox>)} </Col> 
+            <Col md={6}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
+            {/* <Col md={6}> {this.state.token_type && this.state.allPlaylistIds && (<SongBox playlist_id = {this.state.allPlaylistIds} songs = {this.state.songs} artists = {this.state.artists}> </SongBox>)} </Col>  */}
           </Row>
           {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
         </Container>

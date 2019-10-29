@@ -26,6 +26,7 @@ class SongList extends Component {
                     <Card.Body>
                     {this.props.artists[x]}
                     <img src={this.props.album_covers[x]} height="200" width="175"/>
+                    <AddSongBtn playlists_name = {this.props.playlists_name} playlists_id = {this.props.playlists_id} access_token={this.state.access_token} token_type={this.state.token_type}> </AddSongBtn>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>
