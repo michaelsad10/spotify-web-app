@@ -31,7 +31,6 @@ class UserPlaylist extends Component {
         }
         axios.get(`https://api.spotify.com/v1/users/${this.props.user_id}/playlists`, config)
             .then(response => this.setState({ data: response.data }))
-            // , console.log(response.data)
     }
     
     render() {
