@@ -97,9 +97,9 @@ class App extends Component {
       <div className="background">
         <TopNav userName={this.state.userName} loggedIn={this.state.loggedIn}></TopNav>
         <Container>
-          {/* <Row>
+          <Row>
             {this.state.token_type && (<NowPlaying token_type={this.state.token_type} access_token={this.state.access_token} ></NowPlaying>)}
-          </Row> */}
+          </Row>
           <Row>
             <Col md={6}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
             <Col md={6}> {this.state.token_type && this.state.allPlaylistIds && (<SearchBar  playlists_name = {this.state.playlists_name} playlists_id = {this.state.allPlaylistIds} loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
