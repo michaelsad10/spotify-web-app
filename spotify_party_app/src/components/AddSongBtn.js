@@ -6,25 +6,25 @@ class AddSongBtn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            choice : 'Playlist'
+            playlist_name : 'Playlist'
         }
     }
 
-    handleChoice = (choice) => {
-        console.log(choice); 
-        this.setState({choice : choice}); 
+    handleChoice = (name) => {
+        this.setState({playlist_name : name}); 
     }
     render() {
         var options = [];
         var choice = <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {this.state.choice}
+            {this.state.playlist_name}
         </Dropdown.Toggle>
         var playlists_obj = {};
         for (var x=0; x < this.props.playlists_name.length; x++) {
-            var name = this.props.playlists_name[x];
+            const name = this.props.playlists_name[x];
+            console.log(name); 
             playlists_obj[this.props.playlists_name[x]] = this.props.playlists_id[x];
             options.push(
-                <Dropdown.Item key={x} onClick={() => this.handleChoice(name)}> {this.props.playlists_name[x]} </Dropdown.Item>
+                <Dropdown.Item key={x} onClick={ () => this.handleChoice(name)}> {this.props.playlists_name[x]} </Dropdown.Item>
             );
         }
         return (
