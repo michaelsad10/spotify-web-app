@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import AddSongBtn from './AddSongBtn';
+import PlaylistButton from './PlaylistButton';
+import AddSongBtn from './AddSongBtn'; 
 
 class SongList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            playlist_id : '', 
         }
+    }
+
+    handlePlaylistId = (id) => {
+        this.setState({
+            playlist_id : id,
+        })
     }
 
     render() {
@@ -18,23 +25,17 @@ class SongList extends Component {
             songs.push(
                 <Card key={x}>
                     <Card.Header>
-                        <Accordion.Toggle as={Button} eventKey={x}>
-                            {this.props.songs[x]}
+                        <Accordion.Toggle eventKey={x}>
+                            {this.props.songs[x]} - {this.props.artists[x]} - {this.props.token_type} <img src={this.props.album_covers[x]}  height="100" width="100"/>
                         </Accordion.Toggle>
+                        <AddSongBtn song_uri = {this.props.song_uri} playlists_name = {this.props.playlists_name} songName = {this.props.songs[x]} playlists_id = {this.props.playlists_id} access_token={this.props.access_token} token_type={this.props.token_type}></AddSongBtn>
                     </Card.Header>
-                    <Accordion.Collapse eventKey={x}>
-                        <Card.Body>
-                            {this.props.artists[x]}
-                            <img src={this.props.album_covers[x]} height="200" width="175" />
-                        </Card.Body>
-                    </Accordion.Collapse>
                 </Card>
 
             );
         }
         return (
             <Accordion defaultActiveKey="0">
-                <AddSongBtn playlists_name={this.props.playlists_name} playlists_id={this.props.playlists_id} access_token={this.state.access_token} token_type={this.state.token_type}> </AddSongBtn>
                 {songs}
             </Accordion>
         );

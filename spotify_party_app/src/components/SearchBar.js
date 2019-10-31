@@ -65,7 +65,7 @@ class SearchBar extends Component {
                 <FormControl onChange={this.handleSearch} type="text" placeholder="Search" className="mr-sm-2"/>
                 {this.props.access_token && (<Button onClick={this.search} > Search </Button>)}
                 </Form>
-                {this.state.songs && (<SongList playlists_name = {this.props.playlists_name} playlists_id = {this.props.playlists_id}  artists = {this.state.artists} song_uri = {this.state.song_uri} album_covers = {this.state.album_covers} songs = {this.state.songs} token_type = {this.props.token_type} access_token = {this.props.access_token}> </SongList>)}
+                {this.state.songs && (<SongList song_uri = {this.state.song_uri} playlists_name = {this.props.playlists_name} playlists_id = {this.props.playlists_id}  artists = {this.state.artists} song_uri = {this.state.song_uri} album_covers = {this.state.album_covers} songs = {this.state.songs} token_type = {this.props.token_type} access_token = {this.props.access_token}> </SongList>)}
             </div> 
             
         );

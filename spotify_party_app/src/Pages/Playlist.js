@@ -16,9 +16,8 @@ class Playlist extends Component {
             token_type: this.props.token_type, 
             expires_in: this.props.expires_in, 
         })
-        console.log(this.state.access_token);
     }
-
+    
     render() {
         return (
             <div>
