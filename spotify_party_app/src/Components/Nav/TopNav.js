@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { Link } from 'react-router-dom';
 
 const authEndpoint = 'https://accounts.spotify.com/authorize?';
 const clientId = "4fa655f5a2e04f5baaa9f13b6283bddf";

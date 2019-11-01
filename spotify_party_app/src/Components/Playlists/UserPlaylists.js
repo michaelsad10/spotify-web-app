@@ -4,7 +4,7 @@ import axios from 'axios';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
-import QRCode from './QRCode';
+import QRCode from '../Search/QRCode';
 import Tracks from './Tracks';
 
 class UserPlaylist extends Component {

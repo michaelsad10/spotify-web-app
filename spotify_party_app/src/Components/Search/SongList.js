@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import PlaylistButton from './PlaylistButton';
 import AddSongBtn from './AddSongBtn'; 
 
 class SongList extends Component {

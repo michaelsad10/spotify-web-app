@@ -51,11 +51,6 @@ class SearchBar extends Component {
           }     
         })
       }
-// information = response.data.tracks.items is an array of all the artists 
-// songs = information[x].name 
-// artist = information.artists[0].name 
-
-
     
 
     render() {

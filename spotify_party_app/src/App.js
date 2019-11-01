@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import "./App.css";
-import SearchBar from './components/SearchBar';
+import SearchBar from './Components/Search/SearchBar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import TopNav from './components/TopNav';
-import CreatePlaylist from './components/CreatePlaylist';
-import UserPlaylists from './components/UserPlaylists';
-import UserId from './components/UserId';
-import NowPlaying from './components/NowPlaying';
+import TopNav from './Components/Nav/TopNav';
+import CreatePlaylist from './Components/Playlists/CreatePlaylist';
+import UserPlaylists from './Components/Playlists/UserPlaylists';
+import UserId from './Utilities/UserId';
+import NowPlaying from './Components/NowPlaying/NowPlaying';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-class App extends Component {
+class App extends Component {componentscomponents
   constructor(props) {
     super(props);
     this.state = {
@@ -96,11 +96,12 @@ class App extends Component {
             {this.state.token_type && (<NowPlaying token_type={this.state.token_type} access_token={this.state.access_token} ></NowPlaying>)}
           </Row>
           <Row>
-            <Col md={6}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
-            <Col md={6}> {this.state.token_type && this.state.allPlaylistIds && (<SearchBar  playlists_name = {this.state.playlists_name} playlists_id = {this.state.allPlaylistIds} loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
+            <Col md={5}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
+            <Col md={5}> {this.state.token_type && this.state.allPlaylistIds && (<SearchBar  playlists_name = {this.state.playlists_name} playlists_id = {this.state.allPlaylistIds} loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
           </Row>
           <Row>
-            <Col md={6}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
+            <Col md={5}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
+            
           </Row>
           {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
         </Container>
