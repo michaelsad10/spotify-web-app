@@ -33,7 +33,6 @@ class AddSongBtn extends Component {
         uris: [this.state.song_uri]
         }, config)
         .then(response => {
-            console.log(response); 
         })
     }
 

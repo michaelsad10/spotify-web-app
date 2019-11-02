@@ -9,6 +9,7 @@ import CreatePlaylist from './Components/Playlists/CreatePlaylist';
 import UserPlaylists from './Components/Playlists/UserPlaylists';
 import UserId from './Utilities/UserId';
 import NowPlaying from './Components/NowPlaying/NowPlaying';
+import SongList from './Components/SongList/SongList'; 
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -20,8 +21,6 @@ class App extends Component {componentscomponents
       token_type: '',
       expires_in: '',
       loggedIn: false,
-      songs: '',
-      artists: '',
       input: '',
       playlist: '',
       userName: '',
@@ -30,6 +29,10 @@ class App extends Component {componentscomponents
       playlist_href: '',
       allPlaylistIds: [], 
       playlists_name: [], 
+      songs: [], 
+      artists: [], 
+      album_covers: [],
+      song_uris: [], 
     };
     this.getSpotify = this.getSpotify.bind(this);
     this.getHashParams = this.getHashParams.bind(this);
@@ -67,9 +70,13 @@ class App extends Component {componentscomponents
     })
   }
 
-  songCallBack = (songs, artists) => {
-    this.setState({ songs: songs })
-    this.setState({ artists: artists })
+  songCallBack = (songs, artists, album_covers, song_uris) => {
+    this.setState({
+      songs: songs,
+      artists: artists,
+      album_covers: album_covers, 
+      song_uris: song_uris, 
+    })
   }
 
   getPlayListId(id, href, playlist_id) {
@@ -97,11 +104,11 @@ class App extends Component {componentscomponents
           </Row>
           <Row>
             <Col md={5}> {this.state.token_type && (<CreatePlaylist sendPlaylistId={this.getPlayListId} token_type={this.state.token_type} access_token={this.state.access_token}> </CreatePlaylist>)} </Col>
-            <Col md={5}> {this.state.token_type && this.state.allPlaylistIds && (<SearchBar  playlists_name = {this.state.playlists_name} playlists_id = {this.state.allPlaylistIds} loggedIn = {this.state.loggedIn} parentCallBack = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
+            <Col md={5}> {this.state.token_type && (<SearchBar songCallback = {this.songCallBack} access_token = {this.state.access_token} token_type = {this.state.token_type} > </SearchBar>)} </Col>
           </Row>
           <Row>
-            <Col md={5}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id}> </UserPlaylists>} </Col>
-            
+            <Col md={5}> {this.state.user_id && this.state.access_token && <UserPlaylists sendPlaylistId = {this.getAllPlaylistId} access_token={this.state.access_token} token_type={this.state.token_type} user_id={this.state.user_id} playlist_id = {this.state.playlist_id}> </UserPlaylists>} </Col>
+            <Col md={5}> {this.state.access_token && this.state.songs && (<SongList songs = {this.state.songs} song_uri = {this.state.song_uris} artists = {this.state.artists} album_covers = {this.state.album_covers} access_token={this.state.access_token} token_type={this.state.token_type} playlists_id = {this.state.allPlaylistIds} playlists_name = {this.state.playlists_name}> </SongList>)} </Col>
           </Row>
           {this.state.access_token && (<UserId sendId={this.getUserId} access_token={this.state.access_token} token_type={this.state.token_type}> </UserId>)}
         </Container>

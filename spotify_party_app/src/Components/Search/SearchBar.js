@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormControl from 'react-bootstrap/FormControl'; 
 import Form from 'react-bootstrap/Form'; 
 import Button  from 'react-bootstrap/Button'; 
-import SongList from './SongList';
 import axios from 'axios';
 
 
@@ -21,6 +20,10 @@ class SearchBar extends Component {
 
     handleSearch = (search) => {
         this.setState({search: search.target.value})
+    }
+
+    songCallback = () => {
+      this.props.songCallback(this.state.songs, this.state.artists, this.state.album_covers, this.state.song_uri);
     }
 
     search() {
@@ -47,7 +50,7 @@ class SearchBar extends Component {
                 artists : artists,
                 album_covers : album_covers,
                 song_uri : song_uri
-            });
+            }, this.songCallback)
           }     
         })
       }
@@ -60,7 +63,6 @@ class SearchBar extends Component {
                 <FormControl onChange={this.handleSearch} type="text" placeholder="Search" className="mr-sm-2"/>
                 {this.props.access_token && (<Button onClick={this.search} > Search </Button>)}
                 </Form>
-                {this.state.songs && (<SongList song_uri = {this.state.song_uri} playlists_name = {this.props.playlists_name} playlists_id = {this.props.playlists_id}  artists = {this.state.artists} song_uri = {this.state.song_uri} album_covers = {this.state.album_covers} songs = {this.state.songs} token_type = {this.props.token_type} access_token = {this.props.access_token}> </SongList>)}
             </div> 
             
         );
