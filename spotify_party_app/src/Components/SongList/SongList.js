@@ -26,11 +26,10 @@ class SongList extends Component {
                 <div>
                     <Card key={x}>
                         <Card.Header>
-                            {this.props.songs[x]} - {this.props.artists[x]} -{" "}
-                            {this.props.token_type}{" "}
+                            {this.props.songs[x]} - {this.props.artists[x]}
                             <img src={this.props.album_covers[x]} height="100" width="100" />
                             <AddSongBtn
-                                song_uri={this.props.song_uri}
+                                song_uri={this.props.song_uri[x]}
                                 playlists_name={this.props.playlists_name}
                                 songName={this.props.songs[x]}
                                 playlists_id={this.props.playlists_id}
