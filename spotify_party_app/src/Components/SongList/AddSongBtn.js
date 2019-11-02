@@ -42,9 +42,9 @@ class AddSongBtn extends Component {
             Add Song 
         </Dropdown.Toggle>
         for (var x=0; x <this.props.playlists_id.length; x++) {
-            const name = this.props.songName; 
-            const playlist_id = this.props.playlists_id[x]; 
-            const song_uri = this.props.song_uri[x]; 
+            let name = this.props.songName; 
+            let playlist_id = this.props.playlists_id[x]; 
+            let song_uri = this.props.song_uri[x]; 
             options.push(
                 <Dropdown.Item key={x} onClick={ () => this.handleChoice(name, playlist_id, song_uri)}> {this.props.playlists_name[x]} </Dropdown.Item>
             );
