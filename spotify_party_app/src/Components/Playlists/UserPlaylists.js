@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-import Image from 'react-bootstrap/Image';
 import QRCode from '../SongList/QRCode';
 import Tracks from './Tracks';
 
@@ -26,6 +25,7 @@ class UserPlaylist extends Component {
     componentDidMount() {
         this.getPlaylists();
     }
+
     getPlaylists() {
         let config = {
             headers: {
@@ -37,6 +37,7 @@ class UserPlaylist extends Component {
         axios.get(`https://api.spotify.com/v1/users/${this.props.user_id}/playlists`, config)
             .then((response => {
                 if (response != null) {
+                    console.log(response); 
                     this.setState({ data: response.data })
                     for (var x = 0; x < response.data.items.length; x++) {
                         playlists.push(response.data.items[x].id);

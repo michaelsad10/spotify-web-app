@@ -37,7 +37,27 @@ class CreatePlaylist extends Component {
     }
 
     sendPlaylistId(id, href, playlist_id) {
+        console.log("Hello1");
+        this.makeCollabPlaylistPublic(playlist_id); 
+        console.log("Hello");
         this.props.sendPlaylistId(id, href, playlist_id);
+    }
+
+    makeCollabPlaylistPublic = (id) => {
+        console.log("Hello3");
+        let config = {
+            headers: {
+                'Authorization': '' + this.props.token_type + " " + this.props.access_token
+            },
+        }
+        axios.put(`https://api.spotify.com/v1/playlists/${id}`,{
+            name: this.state.playlist_name, 
+            public: true, 
+            collaborative: true 
+        }, config)
+        .then(response => {
+            console.log(response); 
+        }); 
     }
 
     getUserId() {
