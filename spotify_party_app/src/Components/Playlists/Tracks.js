@@ -20,6 +20,7 @@ class Tracks extends Component {
                 'Authorization': '' + this.props.token_type + " " + this.props.access_token
             }
         }
+        
         var song = []; 
         var artist = []; 
         axios.get(`${this.props.tracks}`, config)
